@@ -7,117 +7,117 @@ M.setup = function()
 	vim.opt.statuscolumn = "%l%s"
 	vim.opt.updatetime = 1000
 
-	-- Define diagnostic signs in the sign column
-	vim.fn.sign_define("DiagnosticSignError", { text = "●", texthl = "DiagnosticError" })
-	vim.fn.sign_define("DiagnosticSignWarn", { text = "●", texthl = "DiagnosticWarn" })
-	vim.fn.sign_define("DiagnosticSignHint", { text = "●", texthl = "DiagnosticHint" })
-	vim.fn.sign_define("DiagnosticSignInfo", { text = "●", texthl = "DiagnosticInfo" })
-
-	-- Noice.nvim setup for handling hover
-	require("noice").setup({
-		opts = {
-			routes = {
-				{
-					filter = {
-						event = "notify",
-						find = "method textDocument/hover is not supported",
-					},
-					opts = { skip = true },
-				},
-				{
-					filter = {
-						event = "notify",
-						find = "position_encoding param is required",
-					},
-					opts = { skip = true },
-				},
-			},
-			notify = {
-				enabled = false,
-				view = "notify",
-			},
-			views = {
-				lsp_popup_dynamic = {
-					backend = "popup",
-					size = {
-						width = "auto", -- grow with content
-						height = "auto", -- grow with content
-						max_width = math.floor(vim.o.columns * 0.5), -- maximum 50% of screen width
-						max_height = math.floor(vim.o.lines * 0.3), -- maximum 30% of screen height
-					},
-					border = {
-						style = "rounded",
-					},
-					position = {
-						row = 1,
-						col = 0,
-					},
-					win_options = {
-						wrap = true, -- Wrap long lines automatically
-						linebreak = true, -- Break at word boundaries, not mid-word
-						winhighlight = { Normal = "NormalFloat", FloatBorder = "FloatBorder" },
-						winblend = 10,
-					},
-				},
-			},
-			lsp = {
-				progress = {
-					enabled = true,
-					format = "lsp_progress",
-					format_done = "lsp_progress_done",
-					throttle = 1000 / 30,
-					view = "mini",
-				},
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
-				},
-				hover = {
-					enabled = true,
-					silent = true,
-					view = "lsp_popup_dynamic", -- our new view
-					opts = {}, -- use view's settings
-				},
-				signature = {
-					enabled = true,
-					auto_open = {
-						enabled = true,
-						trigger = true,
-						luasnip = true,
-						throttle = 50,
-					},
-					view = nil,
-					opts = {},
-				},
-				message = {
-					enabled = true,
-					view = "notify",
-					opts = {},
-				},
-				documentation = {
-					view = "lsp_popup_dynamic", -- consistent view for hover + docs
-					opts = {
-						replace = true,
-						render = "plain", --"markdown"
-						win_options = {
-							wrap = true,
-							linebreak = true,
-							concealcursor = "n",
-							conceallevel = 3,
-						},
-						style = "minimal",
-						border = "rounded",
-						relative = "cursor",
-						anchor = "SW",
-						row = -1,
-						col = 0,
-					},
-				},
-			},
-		},
-	})
-
+	-- -- Define diagnostic signs in the sign column
+	-- vim.fn.sign_define("DiagnosticSignError", { text = "●", texthl = "DiagnosticError" })
+	-- vim.fn.sign_define("DiagnosticSignWarn", { text = "●", texthl = "DiagnosticWarn" })
+	-- vim.fn.sign_define("DiagnosticSignHint", { text = "●", texthl = "DiagnosticHint" })
+	-- vim.fn.sign_define("DiagnosticSignInfo", { text = "●", texthl = "DiagnosticInfo" })
+	--
+	-- -- Noice.nvim setup for handling hover
+	-- require("noice").setup({
+	-- 	opts = {
+	-- 		routes = {
+	-- 			{
+	-- 				filter = {
+	-- 					event = "notify",
+	-- 					find = "method textDocument/hover is not supported",
+	-- 				},
+	-- 				opts = { skip = true },
+	-- 			},
+	-- 			{
+	-- 				filter = {
+	-- 					event = "notify",
+	-- 					find = "position_encoding param is required",
+	-- 				},
+	-- 				opts = { skip = true },
+	-- 			},
+	-- 		},
+	-- 		notify = {
+	-- 			enabled = false,
+	-- 			view = "notify",
+	-- 		},
+	-- 		views = {
+	-- 			lsp_popup_dynamic = {
+	-- 				backend = "popup",
+	-- 				size = {
+	-- 					width = "auto", -- grow with content
+	-- 					height = "auto", -- grow with content
+	-- 					max_width = math.floor(vim.o.columns * 0.5), -- maximum 50% of screen width
+	-- 					max_height = math.floor(vim.o.lines * 0.3), -- maximum 30% of screen height
+	-- 				},
+	-- 				border = {
+	-- 					style = "rounded",
+	-- 				},
+	-- 				position = {
+	-- 					row = 1,
+	-- 					col = 0,
+	-- 				},
+	-- 				win_options = {
+	-- 					wrap = true, -- Wrap long lines automatically
+	-- 					linebreak = true, -- Break at word boundaries, not mid-word
+	-- 					winhighlight = { Normal = "NormalFloat", FloatBorder = "FloatBorder" },
+	-- 					winblend = 10,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		lsp = {
+	-- 			progress = {
+	-- 				enabled = true,
+	-- 				format = "lsp_progress",
+	-- 				format_done = "lsp_progress_done",
+	-- 				throttle = 1000 / 30,
+	-- 				view = "mini",
+	-- 			},
+	-- 			override = {
+	-- 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+	-- 				["vim.lsp.util.stylize_markdown"] = true,
+	-- 				["cmp.entry.get_documentation"] = true,
+	-- 			},
+	-- 			hover = {
+	-- 				enabled = true,
+	-- 				silent = true,
+	-- 				view = "lsp_popup_dynamic", -- our new view
+	-- 				opts = {}, -- use view's settings
+	-- 			},
+	-- 			signature = {
+	-- 				enabled = true,
+	-- 				auto_open = {
+	-- 					enabled = true,
+	-- 					trigger = true,
+	-- 					luasnip = true,
+	-- 					throttle = 50,
+	-- 				},
+	-- 				view = nil,
+	-- 				opts = {},
+	-- 			},
+	-- 			message = {
+	-- 				enabled = true,
+	-- 				view = "notify",
+	-- 				opts = {},
+	-- 			},
+	-- 			documentation = {
+	-- 				view = "lsp_popup_dynamic", -- consistent view for hover + docs
+	-- 				opts = {
+	-- 					replace = true,
+	-- 					render = "plain", --"markdown"
+	-- 					win_options = {
+	-- 						wrap = true,
+	-- 						linebreak = true,
+	-- 						concealcursor = "n",
+	-- 						conceallevel = 3,
+	-- 					},
+	-- 					style = "minimal",
+	-- 					border = "rounded",
+	-- 					relative = "cursor",
+	-- 					anchor = "SW",
+	-- 					row = -1,
+	-- 					col = 0,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- })
+	--
 	-- Configure diagnostics
 	vim.diagnostic.config({
 		virtual_text = false, -- no inline diagnostics
